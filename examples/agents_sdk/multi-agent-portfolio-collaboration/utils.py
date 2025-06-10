@@ -21,7 +21,8 @@ DISCLAIMER = (
 # Paths
 # ---------------------------------------------------------------------------
 
-ROOT_DIR: Path = Path(__file__).resolve().parent  # repository root
+# The repository root (../../.. from this file)
+ROOT_DIR: Path = Path(__file__).resolve().parents[3]
 
 
 def repo_path(rel: str | Path) -> Path:

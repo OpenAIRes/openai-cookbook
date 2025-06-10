@@ -21,12 +21,24 @@ def get_changed_notebooks(base_ref: str = "origin/main") -> list[Path]:
 
 def is_valid_notebook(path: Path) -> bool:
     """
-    Checks if the notebook at the given path is valid by attempting to read it
-    with nbformat.
+    Checks if the notebook at the given path is valid by ensuring it can be
+    parsed by nbformat and that none of its cells contain execution counts or
+    outputs.
     """
     try:
         with open(path, "r", encoding="utf-8") as f:
-            nbformat.read(f, as_version=4)
+            nb = nbformat.read(f, as_version=4)
+
+        for cell in nb.cells:
+            if cell.get("execution_count") is not None:
+                print(f"{path}: INVALID - execution counts present")
+                return False
+            # only code cells may have outputs, but checking all for safety
+            outputs = cell.get("outputs")
+            if outputs:
+                print(f"{path}: INVALID - outputs present")
+                return False
+
         return True
     except Exception as e:
         print(f"{path}: INVALID - {e}")

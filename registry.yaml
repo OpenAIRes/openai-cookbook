@@ -30,7 +30,7 @@
     - agents-sdk
     - functions
     - responses
-    - mutli-agent-collaboration
+    - multi-agent-collaboration
 
 - title: o3/o4-mini Function Calling Guide
   path: examples/o-series/o3o4-mini_prompting_guide.ipynb
